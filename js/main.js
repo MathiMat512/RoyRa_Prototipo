@@ -19,6 +19,11 @@ const PRODUCTS = {
     { name: "Chaleco Térmico Ligero", price: 99 },
     { name: "Chaleco Cortaviento", price: 109 },
     { name: "Chaleco Reflectivo Run", price: 89 }
+  ],
+  kids: [
+    { name: "Camiseta KID", slug: "camiseta-kid", price: 35, description: "Camiseta infantil ligera y transpirable, diseñada para que los niños se muevan con total libertad durante el entrenamiento o la actividad física." },
+    { name: "Short KID", price: 29 },
+    { name: "Medias KID", price: 15 }
   ]
 };
 
@@ -102,13 +107,28 @@ function addToCart(name, price, attributes = {}, quantity = 1) {
 function renderProducts() {
   const featured = document.getElementById("featuredProducts");
   if (featured) { // 2 productos por categoría = 8 destacados
-    featured.innerHTML = Object.values(PRODUCTS).flatMap(list => list.slice(0, 2))
+    featured.innerHTML = Object.entries(PRODUCTS)
+      .filter(([cat]) => cat !== "kids")
+      .flatMap(([, list]) => list.slice(0, 2))
       .map(p => productCard(p, "col-6 col-md-6 col-lg-3")).join("");
   }
   const list = document.getElementById("categoryProducts");
   if (list) {
-    list.innerHTML = PRODUCTS[list.dataset.category].map(p =>
-      productCard(p, "col-12 col-sm-6 col-lg-4", list.dataset.category === "camisetas")).join("");
+    const cat = list.dataset.category;
+    list.innerHTML = PRODUCTS[cat].map(p => {
+      const isKidsCamiseta = cat === "kids" && p.slug === "camiseta-kid";
+      const enableLink = cat === "camisetas" || isKidsCamiseta;
+      const detailPage = isKidsCamiseta ? `producto-camiseta-kid.html?product=${encodeURIComponent(p.slug)}` : `producto-camiseta.html?product=${encodeURIComponent(p.slug)}`;
+      if (enableLink && p.slug) {
+        const cardContent = `<div class="ph ph-product" role="img" aria-label="Espacio reservado para la foto de ${p.name}"><span>Imagen de producto</span></div>
+    <div class="product-card-info"><h3>${p.name}</h3><div class="price">S/ ${p.price.toFixed(2)}</div><span class="product-details-label">Ver características</span></div>`;
+        return `<div class="col-12 col-sm-6 col-lg-4"><article class="card-ro">
+    <a class="product-card-link" href="${detailPage}" aria-label="Ver detalles de ${p.name}">${cardContent}</a>
+    <div class="body"><button class="btn btn-brand" type="button" data-add-to-cart data-product-name="${p.name}" data-product-price="${p.price}">Agregar al carrito</button></div>
+  </article></div>`;
+      }
+      return productCard(p, "col-12 col-sm-6 col-lg-4");
+    }).join("");
   }
 }
 
@@ -175,6 +195,74 @@ function renderProductDetail() {
   });
 }
 
+const KID_SIZES = ["4", "6", "8", "10", "12", "14"];
+
+function renderKidProductDetail() {
+  const container = document.getElementById("productDetailKid");
+  if (!container) return;
+
+  const product = PRODUCTS.kids.find(item =>
+    item.slug === new URLSearchParams(window.location.search).get("product"));
+  if (!product) {
+    container.innerHTML = `<div class="col-12"><div class="alert alert-warning" role="alert">
+      No encontramos ese producto. <a href="kids.html">Volver a Kids</a>.
+    </div></div>`;
+    return;
+  }
+
+  document.title = `${product.name} | RO&RA Kids`;
+  container.innerHTML = `<div class="col-lg-5">
+    <form class="product-options" id="kidProductOptionsForm">
+      <div class="kids-detail-badge mb-3">✨ Colección Kids</div>
+      <h1 class="section-title">Personaliza la Camiseta KID</h1>
+      <div class="mb-3"><label class="form-label fw-semibold" for="kidNeckType">Tipo de cuello</label>
+        <select class="form-select" id="kidNeckType" name="neckType" required>
+          <option value="" selected disabled>Selecciona el cuello</option><option>Cuello tipo V</option>
+        </select></div>
+      <div class="mb-3"><label class="form-label fw-semibold" for="kidSize">Talla</label>
+        <select class="form-select" id="kidSize" name="size" required>
+          <option value="" selected disabled>Selecciona la talla</option>${KID_SIZES.map(s => `<option>${s}</option>`).join("")}
+        </select></div>
+      <div class="mb-4"><label class="form-label fw-semibold" for="kidQuantity">Cantidad</label>
+        <input class="form-control" id="kidQuantity" name="quantity" type="number" min="1" step="1" value="1" required></div>
+      <button class="btn btn-brand w-100" type="submit">Agregar al carrito</button>
+      <div id="kidProductStatus" class="mt-3" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+  <div class="col-lg-7"><article class="product-detail-card">
+    <div class="ph ph-product product-detail-image kids-product-image" role="img" aria-label="Imagen ficticia de ${product.name}"><span>Imagen de producto</span></div>
+    <div class="product-detail-copy">
+      <p class="text-uppercase fw-semibold mb-1" style="color:var(--gold);">Colección Kids RO&RA</p>
+      <h2>${product.name}</h2><p>${product.description}</p><p class="price mb-3">S/ ${product.price.toFixed(2)}</p>
+      <h3 class="h5">Características</h3>
+      <ul class="mb-0">
+        <li>Tela suave y transpirable apta para niños activos</li>
+        <li>Cuello tipo V cómodo y sin rozaduras</li>
+        <li>Secado rápido para máximo rendimiento infantil</li>
+        <li>Tallas disponibles: 4, 6, 8, 10, 12 y 14</li>
+        <li>Diseño exclusivo RO&RA Kids</li>
+      </ul>
+    </div>
+  </article></div>`;
+
+  document.getElementById("kidProductOptionsForm").addEventListener("submit", event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const status = document.getElementById("kidProductStatus");
+    if (!form.reportValidity()) return;
+
+    const formData = new FormData(form);
+    const quantity = Number(formData.get("quantity"));
+    const attributes = {
+      "Tipo de cuello": formData.get("neckType"),
+      "Talla": formData.get("size")
+    };
+    addToCart(product.name, product.price, attributes, quantity);
+    status.className = "alert alert-success mt-3";
+    status.textContent = "La Camiseta KID se agregó al carrito.";
+  });
+}
+
 function setupContactForm() {
   const form = document.getElementById("contactForm");
   if (!form) return;
@@ -195,6 +283,7 @@ function setupContactForm() {
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
   renderProductDetail();
+  renderKidProductDetail();
   renderCart();
   document.addEventListener("click", event => {
     const addButton = event.target.closest("[data-add-to-cart]");

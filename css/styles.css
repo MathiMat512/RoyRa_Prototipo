@@ -1,4 +1,4 @@
-:root{--brand:#1D84A5;--brand-dark:#166985;--ink:#2E2C2D;--navy:#0B2A43;--soft:#E6F0F4;--white:#fff}
+:root{--brand:#1D84A5;--brand-dark:#166985;--ink:#2E2C2D;--navy:#0B2A43;--soft:#E6F0F4;--white:#fff;--gold:#C8960C;--gold-light:#F5C842;--gold-pale:#FFF8E1}
 body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--white);line-height:1.6}
 h1,h2,h3,h4{font-weight:800;letter-spacing:-.01em;color:var(--navy)}
 a:focus-visible,button:focus-visible,.form-control:focus{outline:3px solid var(--brand);outline-offset:2px}
@@ -85,3 +85,22 @@ a:focus-visible,button:focus-visible,.form-control:focus{outline:3px solid var(-
 @media (max-width:991.98px){.site-header .navbar .container{flex-wrap:wrap}.site-header .navbar-collapse{order:3;flex-basis:100%}.site-header .navbar-nav{padding:.5rem 0}.site-header .nav-link.active{border-bottom:0;border-left:3px solid var(--brand);padding-left:.7rem!important}.header-actions{margin-left:auto}.site-header .navbar-toggler{padding:.35rem .5rem}}
 @media (max-width:991.98px){.cart-menu{position:fixed!important;top:4rem!important;right:.5rem!important;bottom:auto!important;left:auto!important;transform:none!important}}
 @media (max-width:575.98px){.card-ro .body,.product-card-info{padding:.75rem}.card-ro h3{font-size:.95rem}.btn-wa{font-size:.85rem;padding:.5rem}.section{padding:3rem 0}.header-actions{gap:.35rem}.btn-login{padding:.45rem .65rem;font-size:.9rem}.cart-button{width:2.5rem;height:2.5rem}.whatsapp-float{right:1rem;bottom:1rem;width:3.25rem;height:3.25rem}.category-banner{min-height:16rem;padding:2rem 1rem}}
+/* ============================================================
+   KIDS – estilos especiales (colección novedad)
+   ============================================================ */
+@keyframes kids-shimmer{0%,100%{background-position:200% center}50%{background-position:0% center}}
+.nav-link-kids{padding:.35rem .75rem!important;border-radius:2rem;background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold));background-size:200% auto;color:var(--navy)!important;font-weight:800!important;letter-spacing:.03em;animation:kids-shimmer 3s linear infinite;box-shadow:0 2px 8px #f5c84244;transition:transform .2s,box-shadow .2s}
+.nav-link-kids:hover{transform:translateY(-2px);box-shadow:0 4px 14px #f5c84266;background:linear-gradient(90deg,var(--gold-light),var(--gold),var(--gold-light));background-size:200% auto;color:var(--navy)!important}
+.nav-link-kids.active{border-bottom:0!important;border-left:0!important;outline:2px solid var(--gold);outline-offset:2px}
+.kids-nav-label{display:inline-flex;align-items:center;gap:.3rem}
+.kids-nav-label::after{content:"NEW";font-size:.6rem;font-weight:900;background:var(--navy);color:var(--gold-light);padding:.1rem .35rem;border-radius:1rem;vertical-align:middle;letter-spacing:.06em}
+.kids-banner{background:linear-gradient(135deg,#0B2A43 0%,#1a4060 40%,#3d2400 100%);border:2px solid var(--gold);position:relative;overflow:hidden}
+.kids-banner::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,#f5c84218 0%,transparent 65%);pointer-events:none}
+.kids-banner h1{color:#fff;text-shadow:0 2px 12px #0008;font-size:clamp(2rem,6vw,3.5rem)}
+.kids-banner p{color:var(--gold-light);font-weight:600}
+.kids-banner-badge{display:inline-flex;align-items:center;gap:.4rem;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:var(--navy);font-size:.8rem;font-weight:900;letter-spacing:.1em;padding:.35rem .9rem;border-radius:2rem;margin-bottom:1rem;box-shadow:0 3px 10px #f5c84244;animation:kids-shimmer 3s linear infinite;background-size:200% auto}
+.kids-product-image{background:linear-gradient(135deg,#FFF8E1 0%,#ffe082 50%,#fff8e1 100%)!important}
+.kids-product-image::after{background:var(--gold)!important;opacity:.08!important}
+.kids-product-image span{color:var(--gold)!important}
+.kids-detail-badge{display:inline-flex;align-items:center;gap:.4rem;background:linear-gradient(90deg,var(--gold),var(--gold-light));color:var(--navy);font-size:.85rem;font-weight:900;letter-spacing:.06em;padding:.4rem 1rem;border-radius:2rem;box-shadow:0 2px 8px #f5c84244;animation:kids-shimmer 3s linear infinite;background-size:200% auto}
+

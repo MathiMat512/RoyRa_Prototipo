@@ -8,6 +8,7 @@ const SITE = {
     { key: "shorts", href: "shorts.html", label: "Shorts" },
     { key: "medias", href: "medias.html", label: "Medias" },
     { key: "chalecos", href: "chalecos.html", label: "Chalecos" },
+    { key: "kids", href: "kids.html", label: "Kids", isKids: true },
     { key: "quienes-somos", href: "quienes-somos.html", label: "Quiénes somos" },
     { key: "contacto", href: "contacto.html", label: "Contacto" }
   ]
@@ -18,8 +19,11 @@ function waLink(message) {
 }
 
 function renderHeader(current) {
-  const items = SITE.pages.map(p =>
-    `<li class="nav-item"><a class="nav-link${p.key === current ? " active" : ""}" href="${p.href}"${p.key === current ? ' aria-current="page"' : ""}>${p.label}</a></li>`).join("");
+  const items = SITE.pages.map(p => {
+    const isActive = p.key === current;
+    const kidsClass = p.isKids ? " nav-link-kids" : "";
+    return `<li class="nav-item"><a class="nav-link${isActive ? " active" : ""}${kidsClass}" href="${p.href}"${isActive ? ' aria-current="page"' : ""}>${p.isKids ? `<span class="kids-nav-label">${p.label}</span>` : p.label}</a></li>`;
+  }).join("");
   return `<header class="site-header"><nav class="navbar navbar-expand-lg" aria-label="Navegación principal"><div class="container">
     <a class="navbar-brand" href="index.html" aria-label="RO&RA, inicio"><img src="assets/images/icono-royra.png" alt="RO&RA"></a>
     <div class="collapse navbar-collapse" id="mainMenu"><ul class="navbar-nav ms-auto">${items}</ul></div>
