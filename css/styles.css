@@ -152,23 +152,22 @@ button:focus-visible,
    height: 2.75rem;
    padding: .5rem;
    color: var(--navy);
-   border: 1px solid #d5dde1;
-   border-radius: .4rem
+   border: 0;
+   border-radius: 0;
+   background: transparent
 }
 
 .cart-button:hover {
    color: var(--brand-dark);
-   background: var(--soft)
+   background: transparent
 }
 
-.cart-button svg {
-   width: 1.45rem;
-   height: 1.45rem;
-   fill: none;
-   stroke: currentColor;
-   stroke-width: 1.8;
-   stroke-linecap: round;
-   stroke-linejoin: round
+.cart-button img,
+.btn-login img {
+   display: block;
+   width: 1.75rem;
+   height: 1.75rem;
+   object-fit: contain
 }
 
 .cart-count {
@@ -189,18 +188,18 @@ button:focus-visible,
 }
 
 .btn-login {
-   background: var(--navy);
-   color: #fff;
-   font-weight: 700;
-   border: 2px solid var(--navy);
-   padding: .55rem 1rem;
-   border-radius: .4rem
+   display: grid;
+   place-items: center;
+   width: 2.75rem;
+   height: 2.75rem;
+   padding: .5rem;
+   border: 0;
+   border-radius: 0;
+   background: transparent
 }
 
 .btn-login:hover {
-   background: var(--brand-dark);
-   border-color: var(--brand-dark);
-   color: #fff
+   background: transparent
 }
 
 .cart-menu {
@@ -287,6 +286,20 @@ button:focus-visible,
 .site-footer h2 {
    color: var(--white);
    font-size: 1.1rem
+}
+
+.footer-socials {
+   display: flex;
+   align-items: center;
+   gap: .75rem
+}
+
+.footer-socials img {
+   width: 2.5rem;
+   height: 2.5rem;
+   padding: .25rem;
+   border-radius: .5rem;
+   object-fit: contain
 }
 
 .site-footer .payment-methods h3 {
@@ -553,7 +566,6 @@ button:focus-visible,
    width: 4rem;
    height: 4rem;
    border-radius: .8rem;
-   background: #e6f0f4;
    display: grid;
    place-items: center
 }
@@ -704,11 +716,6 @@ button:focus-visible,
 
    .header-actions {
       gap: .35rem
-   }
-
-   .btn-login {
-      padding: .45rem .65rem;
-      font-size: .9rem
    }
 
    .cart-button {

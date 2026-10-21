@@ -30,12 +30,14 @@ function renderHeader(current) {
     <div class="header-actions">
       <div class="dropdown">
         <button class="btn cart-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Abrir carrito">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h2l2.2 11.1a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 1.9-1.4L22 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/></svg>
+          <img src="assets/images/icono-carrito.png" alt="" aria-hidden="true">
           <span class="cart-count" id="cartCount" aria-live="polite">0</span>
         </button>
         <div class="dropdown-menu dropdown-menu-end cart-menu" id="cartMenu" aria-label="Contenido del carrito"></div>
       </div>
-      <button class="btn btn-login" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">Ingresar</button>
+      <button class="btn btn-login" type="button" data-bs-toggle="modal" data-bs-target="#loginModal" aria-label="Ingresar">
+        <img src="assets/images/icono-usuario.png" alt="" aria-hidden="true">
+      </button>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
     </div>
   </div></nav></header>`;
@@ -51,14 +53,21 @@ function renderLoginModal() {
 }
 
 function renderFooter() {
-  const links = SITE.pages.map(p => `<li><a href="${p.href}">${p.label}</a></li>`).join("");
+  const categories = SITE.pages.filter(p => ["quienes-somos", "camisetas", "shorts", "medias", "chalecos"].includes(p.key));
+  const links = categories.map(p => `<li><a href="${p.href}">${p.label}</a></li>`).join("");
   return `<footer class="site-footer"><div class="container"><div class="row g-4">
     <div class="col-md-5"><div class="footer-brand">RO&RA</div>
-      <p class="mt-2">Ropa deportiva pensada para moverte con comodidad, calidad y estilo.</p></div>
+      <p class="mt-2">Ropa deportiva pensada para moverte con comodidad, calidad y estilo.</p>
+      <h2>Contacto</h2>
+      <div class="footer-socials" aria-label="Redes sociales">
+        <img src="assets/images/icono-facebook.png" alt="Facebook">
+        <img src="assets/images/icono-instagram.png" alt="Instagram">
+        <img src="assets/images/icono-tiktok.png" alt="TikTok">
+      </div>
+    </div>
     <div class="col-6 col-md-3"><h2>Explora</h2><ul class="list-unstyled">${links}</ul></div>
-    <div class="col-6 col-md-4"><h2>Escríbenos</h2>
-      <a class="btn btn-wa" href="${waLink("Hola, quiero más información sobre RO&RA.")}" target="_blank" rel="noopener">WhatsApp</a>
-      <div class="payment-methods mt-3"><h3>Métodos de pagos aceptados:</h3><p class="mb-0">Yape, Plin</p></div></div>
+    <div class="col-6 col-md-4">
+      <div class="payment-methods"><h3>Métodos de pagos aceptados:</h3><p class="mb-0">Yape, Plin</p></div></div>
   </div><div class="footer-bottom">&copy; <span id="footerYear"></span> RO&RA. Todos los derechos reservados.</div></div></footer>`;
 }
 
