@@ -4,12 +4,12 @@ const SITE = {
   whatsappNumber: "51999999999", // NÚMERO DE EJEMPLO: reemplazar por el real (código de país + número, sin + ni espacios)
   pages: [
     { key: "inicio", href: "index.html", label: "Inicio" },
+    { key: "quienes-somos", href: "quienes-somos.html", label: "Quiénes somos" },
     { key: "camisetas", href: "camisetas.html", label: "Camisetas" },
     { key: "shorts", href: "shorts.html", label: "Shorts" },
     { key: "medias", href: "medias.html", label: "Medias" },
     { key: "chalecos", href: "chalecos.html", label: "Chalecos" },
     { key: "kids", href: "kids.html", label: "Kids", isKids: true },
-    { key: "quienes-somos", href: "quienes-somos.html", label: "Quiénes somos" },
     { key: "contacto", href: "contacto.html", label: "Contacto" }
   ]
 };
@@ -73,4 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("site-footer").innerHTML = renderFooter();
   document.getElementById("footerYear").textContent = new Date().getFullYear();
   document.body.insertAdjacentHTML("beforeend", renderLoginModal() + renderFloatingWhatsApp());
+
+  // Ajustar padding-top del body según la altura real del header fijo
+  function updateHeaderOffset() {
+    const header = document.querySelector(".site-header");
+    if (header) {
+      document.body.style.setProperty("--header-height", header.offsetHeight + "px");
+    }
+  }
+  updateHeaderOffset();
+  window.addEventListener("resize", updateHeaderOffset);
 });

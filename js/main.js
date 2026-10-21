@@ -213,8 +213,7 @@ function renderKidProductDetail() {
   document.title = `${product.name} | RO&RA Kids`;
   container.innerHTML = `<div class="col-lg-5">
     <form class="product-options" id="kidProductOptionsForm">
-      <div class="kids-detail-badge mb-3">✨ Colección Kids</div>
-      <h1 class="section-title">Personaliza la Camiseta KID</h1>
+      <h1 class="section-title">Personaliza tu camiseta</h1>
       <div class="mb-3"><label class="form-label fw-semibold" for="kidNeckType">Tipo de cuello</label>
         <select class="form-select" id="kidNeckType" name="neckType" required>
           <option value="" selected disabled>Selecciona el cuello</option><option>Cuello tipo V</option>
@@ -230,9 +229,8 @@ function renderKidProductDetail() {
     </form>
   </div>
   <div class="col-lg-7"><article class="product-detail-card">
-    <div class="ph ph-product product-detail-image kids-product-image" role="img" aria-label="Imagen ficticia de ${product.name}"><span>Imagen de producto</span></div>
-    <div class="product-detail-copy">
-      <p class="text-uppercase fw-semibold mb-1" style="color:var(--gold);">Colección Kids RO&RA</p>
+    <div class="ph ph-product product-detail-image" role="img" aria-label="Imagen ficticia de ${product.name}"><span>Imagen de producto</span></div>
+    <div class="product-detail-copy"><p class="text-uppercase fw-semibold text-secondary mb-1">Colección de camisetas</p>
       <h2>${product.name}</h2><p>${product.description}</p><p class="price mb-3">S/ ${product.price.toFixed(2)}</p>
       <h3 class="h5">Características</h3>
       <ul class="mb-0">
